@@ -19,12 +19,14 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: getCartFromLocalStorage(),
   reducers: {
+    // calulcate cart totals
     calculateTotals: (state) => {
       state.tax = 0.1 * state.cartTotal;
       state.orderTotal = state.cartTotal + state.shipping + state.tax;
       localStorage.setItem('cart', JSON.stringify(state));
     },
 
+    // add product to the cart
     addItem: (state, action) => {
       const { product, cartID } = action.payload;
       const item = state.cartItems.find((i) => i.cartID === cartID);
@@ -41,11 +43,13 @@ const cartSlice = createSlice({
       toast.success('Item added to cart');
     },
 
+    // clear products from the cart
     clearCart: (state) => {
       localStorage.setItem('cart', JSON.stringify(defaultState));
       return defaultState;
     },
 
+    // remove product from the cart
     removeItem: (state, action) => {
       const { cartID } = action.payload;
       const product = state.cartItems.find((i) => i.cartID === cartID);
@@ -57,6 +61,7 @@ const cartSlice = createSlice({
       toast.success('Item removed from your cart');
     },
 
+    // update amount of the added product in the cart
     editItem: (state, action) => {
       const { cartID, amount } = action.payload;
       const item = state.cartItems.find((i) => i.cartID === cartID);
