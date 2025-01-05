@@ -1,0 +1,27 @@
+import { Link, useLoaderData } from "react-router-dom";
+import { formatPrice } from "../utils";
+
+const ProductsList = () => {
+  const { products } = useLoaderData();
+
+  return (
+    <div className="mt12 grid gap-y-8">
+      {products.map((product) => {
+        const { title, price, image, company} = product.attributes;
+        const dollarsAmount = formatPrice(price);
+        return (
+          <Link key={product.id} to={`/products/${product.id}`} className="p-8 rounded-lg flex flex-col sm:flex-row gap-y-4 flex-wrap bg-base-100 shadow-xl hover:shadow-2xl duration-300 group">
+              <img src={image} alt={title} className="h-24 group object-cover group-hover:scale-105 transition sm:w-32 sm:h-32" />
+            <div className="ml-0 sm:ml-16">
+              <h3 className="capitalize font-medium text-lg">{title}</h3>
+              <h4 className="capitalize text-neutral-conent text-md">{company}</h4>
+            </div>
+            <p className="font-medium ml-0 sm:ml-auto text-lg">{dollarsAmount}</p>
+          </Link>
+        );
+      })}
+    </div>
+  );
+};
+
+export default ProductsList;
