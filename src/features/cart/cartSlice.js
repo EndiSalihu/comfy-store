@@ -61,7 +61,7 @@ const cartSlice = createSlice({
       toast.success('Item removed from your cart');
     },
 
-    // update amount of the added product in the cart
+    // update amount of the added product
     editItem: (state, action) => {
       const { cartID, amount } = action.payload;
       const item = state.cartItems.find((i) => i.cartID === cartID);
